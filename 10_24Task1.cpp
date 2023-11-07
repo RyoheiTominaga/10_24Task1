@@ -5,72 +5,19 @@
 ※Nは1以上200の入力範囲を前提としてよい
 [EasyDivisor]*/
 #include <iostream>
+#include"Divisor.h"
 using namespace std;
-class Divisor {
-public:
-	Divisor(int few,int range);
-	~Divisor();
-	int odd();//奇数
-	int numbered();//偶数
 
-private:
-	int _few;//約数数の指定
-	int _range;//範囲
-};
 
-Divisor::Divisor(int few, int range) { _few = few, _range = range; }
-Divisor::~Divisor() {
-	if (_few != NULL && _range != NULL) {
-		_few = NULL; _range = NULL;
-	}
-}
+//Divisor::Divisor(int few, int range) { _few = few, _range = range; }
+//Divisor::~Divisor() {
+//	if (_few != NULL && _range != NULL) {
+//		_few = NULL; _range = NULL;
+//	}
+//}
 
-int Divisor::numbered()//偶数
-{
-	int count = 0;
-	int numCount = 0;
-	for (int i = 0;i <= _range;i += 2) {
-		for (int j = 1;j <= _range;++j) {
-			if (i < j)
-			{
-				break;
-			}
-			else if (i % j == 0)
-			{
-				count++;
-			}
-			
-		}
-		if (_few == count) {
-			numCount++;
-		}
-		count = 0;
-	}
-	return numCount;
-}
-int Divisor::odd()//奇数
-{
-	int count = 0;
-	int numCount = 0;
-	for (int i = 1;i <= _range;i += 2) {
-		for (int j = 1;j <= _range;++j) {
-			if (i < j)
-			{
-				break;
-			}
-			else if (i % j == 0)
-			{
-				count++;
-			}
 
-		}
-		if (_few == count) {
-			numCount++;
-		}
-		count = 0;
-	}
-	return numCount;
-}
+
 int main()
 {
 	int few = 0,num=-1,range=0;//指定する約数数,奇数か偶数かを判断するやつ,範囲の最大値
@@ -79,16 +26,17 @@ int main()
 	cin >> few;
 	printf("調べる値の最大値を教えてください\n");
 	cin >> range;
+	
 
-	while (num != 1 && num != 2) {
-		printf("奇数か偶数どちらで調べますか？\n1:奇数\n2:偶数\n");
+	while (num != 0 && num != 1) {
+		printf("奇数か偶数どちらで調べますか？\n0:偶数\n1:奇数\n");
 		cin >> num;
 	}
-	Divisor divisor(few,range);
+	Divisor divisor(few,range,num);
 	switch (num) {
-	case 1:printf("1から%dまでの範囲で約数が%dの数は%d個あります", range, few, divisor.odd());//奇数のやつ
+	case 1:printf("1から%dまでの範囲で約数が%dの数は%d個あります", range, few, divisor.DivisorsNumbers());//奇数のやつ
 		break;
-	case 2:printf("1から%dまでの範囲で約数が%dの数は%d個あります",range,few, divisor.numbered());//偶数のやつ
+	case 2:printf("1から%dまでの範囲で約数が%dの数は%d個あります",range,few, divisor.DivisorsNumbers());//偶数のやつ
 		break;
 	}
 }
